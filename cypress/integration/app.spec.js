@@ -25,10 +25,20 @@ context("Customer Details", () => {
     });
 
     it("and a send button", () => {
-        expect(sendButton()).to.not.be.null;
+        expect(sendButton()).to.not.be.empty;
     });
 
     it("and a message history text area", () => {
-        expect(messageHistoryView()).to.not.be.null;
+        expect(messageHistoryView()).to.not.be.empty;
+    });
+
+    it("updates the message history when you enter a message", () => {
+        const expectedMessage = chance.string();
+        messageInput()
+            .type("{selectall}{del}")
+            .type(expectedMessage);
+        sendButton().click();
+        messageHistoryView().invoke('val').then(contents =>
+            expect(contents).to.contain(expectedMessage));
     });
 });
