@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 const ChatContainer = (props) => {
     const history = () => {
@@ -10,6 +11,7 @@ const ChatContainer = (props) => {
             <div className="history">
                 <textarea
                     value={history()}
+                    onChange={()=>{}}
                     data-testid="historybox"/>
             </div>
             <div className="message">
@@ -18,6 +20,11 @@ const ChatContainer = (props) => {
             </div>
         </div>
     );
+};
+
+
+ChatContainer.propTypes = {
+    messageHistory: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default ChatContainer;
