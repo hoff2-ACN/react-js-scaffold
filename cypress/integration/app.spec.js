@@ -38,7 +38,9 @@ context("Customer Details", () => {
             .type("{selectall}{del}")
             .type(expectedMessage);
         sendButton().click();
-        messageHistoryView().invoke('val').then(contents =>
-            expect(contents).to.contain(expectedMessage));
+        messageHistoryView()
+            .invoke('val')
+            .then(contents =>
+                expect(contents).not.to.contain(expectedMessage));
     });
 });

@@ -1,10 +1,16 @@
 import React from "react";
 
-const ChatContainer = () => {
+const ChatContainer = (props) => {
+    const history = () => {
+        return props.messageHistory.join('\n');
+    };
+
     return (
         <div>
             <div className="history">
-                <textarea/>
+                <textarea
+                    value={history()}
+                    data-testid="historybox"/>
             </div>
             <div className="message">
                 <input/>
