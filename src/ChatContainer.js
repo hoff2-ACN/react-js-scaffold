@@ -10,13 +10,20 @@ const ChatContainer = (props) => {
         <div>
             <div className="history">
                 <textarea
+                    data-testid="historybox"
+                    onChange={() => {
+                    }}
                     value={history()}
-                    onChange={()=>{}}
-                    data-testid="historybox"/>
+                />
             </div>
             <div className="message">
                 <input/>
-                <button>Send</button>
+                <button
+                    data-testid="sendbutton"
+                    onClick={props.send}
+                >
+                    Send
+                </button>
             </div>
         </div>
     );
@@ -25,6 +32,7 @@ const ChatContainer = (props) => {
 
 ChatContainer.propTypes = {
     messageHistory: PropTypes.arrayOf(PropTypes.string),
+    send: PropTypes.func
 };
 
 export default ChatContainer;
