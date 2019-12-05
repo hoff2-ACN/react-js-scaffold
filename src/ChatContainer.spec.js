@@ -30,7 +30,9 @@ describe("ChatContainer", () => {
     it("performs provided action when send button is clicked", () => {
         const { queryByTestId } = container;
         const sendButton = queryByTestId('sendbutton');
+
         fireEvent.click(sendButton);
+
         expect(properties.send).toHaveBeenCalled();
     });
 });
