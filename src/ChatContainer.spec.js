@@ -1,6 +1,7 @@
 import React from 'react';
 import ChatContainer from "./ChatContainer";
 import {render} from '@testing-library/react';
+import "@testing-library/jest-dom/extend-expect";
 import Chance from 'chance';
 
 const chance = new Chance();
@@ -18,8 +19,10 @@ describe("ChatContainer", () => {
 
     test("shows message history", () => {
         const { queryByTestId } = container;
+        const expectedHistory = properties.messageHistory.join(' ');
+
         const historyBox = queryByTestId('historybox');
-        const contents = historyBox.innerHTML;
-        expect(contents).toBe(properties.messageHistory.join('\n'));
+
+        expect(historyBox).toHaveTextContent(expectedHistory);
     });
 });
