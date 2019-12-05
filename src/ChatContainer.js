@@ -1,7 +1,6 @@
-import React from 'react';
-import './App.css';
+import React from "react";
 
-function App() {
+const ChatContainer = () => {
     return (
         <div>
             <div className="history">
@@ -9,10 +8,10 @@ function App() {
             </div>
             <div className="message">
                 <input/>
-                <button/>
+                <button>Send</button>
             </div>
         </div>
     );
-}
+};
 
-export default App;
+export default ChatContainer;
