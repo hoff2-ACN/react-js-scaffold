@@ -43,4 +43,15 @@ context("Customer Details", () => {
             .then(contents =>
                 expect(contents).to.contain(expectedMessage));
     });
+
+    it("should clear the message field when sent", () => {
+        messageInput()
+            .type("{selectall}{del}")
+            .type("anything");
+        sendButton().click();
+        messageInput()
+            .invoke('val')
+            .then(contents =>
+                expect(contents).to.be.empty)
+    });
 });

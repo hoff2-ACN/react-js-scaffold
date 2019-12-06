@@ -8,6 +8,11 @@ const ChatContainer = (props) => {
         return props.messageHistory.join('\n');
     };
 
+    const sendMessage = () => {
+        props.send(input);
+        setInput('');
+    };
+
     return (
         <div>
             <div className="history">
@@ -20,10 +25,12 @@ const ChatContainer = (props) => {
             </div>
             <div className="message">
                 <input
-                    onChange={(event) => {setInput(event.target.value)}}/>
+                    onChange={(event) => {setInput(event.target.value)}}
+                    value={input}
+                />
                 <button
                     data-testid="sendbutton"
-                    onClick={() => {props.send(input)}}
+                    onClick={sendMessage}
                 >
                     Send
                 </button>
