@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 const ChatContainer = (props) => {
     const messageHistory = props.messageHistory;
-    const [input, setInput] = useState("");
     const [historyBox, setHistoryBox] = useState(null);
 
     const resetHistoryScroll = () => {
@@ -14,14 +13,17 @@ const ChatContainer = (props) => {
 
     useEffect(resetHistoryScroll, [messageHistory]);
 
-    const history = () => {
+    const formattedHistory = () => {
         return props.messageHistory.join('\n');
     };
+
+    const [input, setInput] = useState("");
 
     const sendMessage = (event) => {
         event.preventDefault();
         event.stopPropagation();
         props.send(input);
+        // todo: this but only on change
         setInput('');
     };
 
@@ -34,7 +36,7 @@ const ChatContainer = (props) => {
                 <textarea
                     data-testid="historybox"
                     ref={(el) => setHistoryBox(el)}
-                    value={history()}
+                    value={formattedHistory()}
                 />
             </div>
             <div className="message row">
