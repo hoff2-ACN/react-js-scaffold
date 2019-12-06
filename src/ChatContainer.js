@@ -14,8 +14,11 @@ const ChatContainer = (props) => {
     };
 
     return (
-        <div>
-            <div className="history">
+        <div className="chat">
+            <div className="row">
+                <h2>{'Chat'}</h2>
+            </div>
+            <div className="history row">
                 <textarea
                     data-testid="historybox"
                     onChange={() => {
@@ -23,7 +26,7 @@ const ChatContainer = (props) => {
                     value={history()}
                 />
             </div>
-            <div className="message">
+            <div className="message row">
                 <input
                     onChange={(event) => {setInput(event.target.value)}}
                     value={input}
