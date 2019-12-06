@@ -8,7 +8,9 @@ const ChatContainer = (props) => {
         return props.messageHistory.join('\n');
     };
 
-    const sendMessage = () => {
+    const sendMessage = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
         props.send(input);
         setInput('');
     };
@@ -27,16 +29,22 @@ const ChatContainer = (props) => {
                 />
             </div>
             <div className="message row">
-                <input
-                    onChange={(event) => {setInput(event.target.value)}}
-                    value={input}
-                />
-                <button
-                    data-testid="sendbutton"
-                    onClick={sendMessage}
+                <form
+                    onSubmit={sendMessage}
                 >
-                    Send
-                </button>
+                    <input
+                        onChange={(event) => {
+                            setInput(event.target.value)
+                        }}
+                        value={input}
+                    />
+                    <button
+                        type="submit"
+                        data-testid="sendbutton"
+                    >
+                        Send
+                    </button>
+                </form>
             </div>
         </div>
     );

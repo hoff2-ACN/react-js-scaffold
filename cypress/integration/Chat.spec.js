@@ -16,9 +16,9 @@ context("Customer Details", () => {
         cy.visit("/");
     });
 
-    const messageInput = () => cy.get('.message>input');
-    const sendButton = () => cy.get('.message>button');
-    const messageHistoryView = () => cy.get('.history>textarea');
+    const messageInput = () => cy.get('.message input');
+    const sendButton = () => cy.get('.message button');
+    const messageHistoryView = () => cy.get('.history textarea');
 
     it("has a working message input", () => {
         verifyInputField(messageInput());
@@ -32,7 +32,7 @@ context("Customer Details", () => {
         expect(messageHistoryView()).to.not.be.empty;
     });
 
-    it("updates the message history when you enter a message", () => {
+    it("updates the message history when you click send", () => {
         const expectedMessage = chance.string();
         messageInput()
             .type("{selectall}{del}")
@@ -44,14 +44,28 @@ context("Customer Details", () => {
                 expect(contents).to.contain(expectedMessage));
     });
 
-    it("should clear the message field when sent", () => {
+    it("updates the message history when you press enter", () => {
+        const expectedMessage = chance.string();
         messageInput()
             .type("{selectall}{del}")
-            .type("anything");
+            .type(expectedMessage);
+        messageInput()
+            .type("{enter}");
+        messageHistoryView()
+            .invoke('val')
+            .then(contents =>
+                expect(contents).to.contain(expectedMessage));
+    });
+
+    it("should clear the message field when sent", () => {
+        const expectedMessage = chance.string();
+        messageInput()
+            .type("{selectall}{del}")
+            .type(expectedMessage);
         sendButton().click();
         messageInput()
             .invoke('val')
             .then(contents =>
-                expect(contents).to.be.empty)
+                expect(contents).to.be.empty);
     });
 });
