@@ -19,6 +19,7 @@ input {
 textarea {
   width: 60rem;
   height: 30rem;
+  overflow-y: scroll;
 }
 
 button {

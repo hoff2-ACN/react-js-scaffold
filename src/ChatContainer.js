@@ -1,8 +1,18 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 const ChatContainer = (props) => {
+    const messageHistory = props.messageHistory;
     const [input, setInput] = useState("");
+    const [historyBox, setHistoryBox] = useState(null);
+
+    const resetHistoryScroll = () => {
+        if (historyBox) {
+            historyBox.scrollTop = historyBox.scrollHeight;
+        }
+    };
+
+    useEffect(resetHistoryScroll, [messageHistory]);
 
     const history = () => {
         return props.messageHistory.join('\n');
@@ -23,8 +33,7 @@ const ChatContainer = (props) => {
             <div className="history row">
                 <textarea
                     data-testid="historybox"
-                    onChange={() => {
-                    }}
+                    ref={(el) => setHistoryBox(el)}
                     value={history()}
                 />
             </div>
@@ -49,7 +58,6 @@ const ChatContainer = (props) => {
         </div>
     );
 };
-
 
 ChatContainer.propTypes = {
     messageHistory: PropTypes.arrayOf(PropTypes.string),
