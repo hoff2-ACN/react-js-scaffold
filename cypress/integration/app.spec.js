@@ -41,6 +41,6 @@ context("Customer Details", () => {
         messageHistoryView()
             .invoke('val')
             .then(contents =>
-                expect(contents).not.to.contain(expectedMessage));
+                expect(contents).to.contain(expectedMessage));
     });
 });
