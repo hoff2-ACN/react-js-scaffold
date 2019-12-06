@@ -1,12 +1,13 @@
 import {connect} from 'react-redux';
 import ChatContainer from "./ChatContainer";
+import {sendMessage} from "./ChatAction";
 
 export const mapStateToProps = state => {
     return {
-        messageHistory: []
+        messageHistory: state.messageHistory
     };
 };
 
-export const mapDispatchToProps = {};
+export const mapDispatchToProps = {send: sendMessage};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);

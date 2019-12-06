@@ -3,8 +3,9 @@ import {Provider} from "react-redux";
 import ChatConnector from './ChatConnector';
 import {applyMiddleware, createStore, combineReducers} from "redux";
 import thunk from "redux-thunk";
+import {sendMessageReducer} from "./ChatReducer";
 
-const reducers = {};
+const reducers = {messageHistory: sendMessageReducer};
 
 const prepareStore = (state) => {
     return createStore(combineReducers(reducers), state, applyMiddleware(thunk));
