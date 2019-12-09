@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+input {
+  width: 45rem;
+}
+
+textarea {
+  width: 60rem;
+  height: 30rem;
+  overflow-y: scroll;
+}
+
+button {
+  width: 10rem;
+  margin-left: 5rem;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.chat .row {
+  margin: 1rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.chat .column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  flex-basis: 100%;
+}

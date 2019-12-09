@@ -1,37 +1,65 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 const ChatContainer = (props) => {
-    const [input, setInput] = useState("");
+    const messageHistory = props.messageHistory;
+    const [historyBox, setHistoryBox] = useState(null);
 
-    const history = () => {
+    const resetHistoryScroll = () => {
+        if (historyBox) {
+            historyBox.scrollTop = historyBox.scrollHeight;
+        }
+    };
+
+    useEffect(resetHistoryScroll, [messageHistory]);
+
+    const formattedHistory = () => {
         return props.messageHistory.join('\n');
     };
 
+    const [input, setInput] = useState("");
+
+    const sendMessage = (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        props.send(input);
+        // todo: this but only on change
+        setInput('');
+    };
+
     return (
-        <div>
-            <div className="history">
+        <div className="chat">
+            <div className="row">
+                <h2>{'Chat'}</h2>
+            </div>
+            <div className="history row">
                 <textarea
                     data-testid="historybox"
-                    onChange={() => {
-                    }}
-                    value={history()}
+                    ref={(el) => setHistoryBox(el)}
+                    value={formattedHistory()}
                 />
             </div>
-            <div className="message">
-                <input
-                    onChange={(event) => {setInput(event.target.value)}}/>
-                <button
-                    data-testid="sendbutton"
-                    onClick={() => {props.send(input)}}
+            <div className="message row">
+                <form
+                    onSubmit={sendMessage}
                 >
-                    Send
-                </button>
+                    <input
+                        onChange={(event) => {
+                            setInput(event.target.value)
+                        }}
+                        value={input}
+                    />
+                    <button
+                        type="submit"
+                        data-testid="sendbutton"
+                    >
+                        Send
+                    </button>
+                </form>
             </div>
         </div>
     );
 };
-
 
 ChatContainer.propTypes = {
     messageHistory: PropTypes.arrayOf(PropTypes.string),
