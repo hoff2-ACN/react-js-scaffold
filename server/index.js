@@ -29,7 +29,7 @@ app.get('/message', (req, res) => {
 
 app.post('/message', (req, res) => {
     messageHistory.push(req.body.message);
-    res.ok();
+    res.sendStatus(200);
 });
 
 let server = app.listen(8080);

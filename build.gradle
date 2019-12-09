@@ -24,7 +24,7 @@ task startServer() {
 }
 
 task startClient() {
-doFirst {
+    doFirst {
         try {
             def proc = 'npm start &'.execute()
             def reader = proc.in.newReader()

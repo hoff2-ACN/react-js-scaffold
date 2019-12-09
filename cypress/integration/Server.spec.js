@@ -12,10 +12,11 @@ describe('the chat server', () => {
 
         cy.request('POST', url, json);
 
-        cy.request(url)
+        cy.request('GET', url)
             .its('headers')
             .its('content-type')
             .should('include', 'application/json')
+        cy.request('GET', url)
             .its('body')
             .should('have.length', 1)
             .should('include', expectedMessage);
