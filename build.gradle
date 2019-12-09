@@ -23,6 +23,24 @@ task startServer() {
     }
 }
 
+task startClient() {
+doFirst {
+        try {
+            def proc = 'npm start &'.execute()
+            def reader = proc.in.newReader()
+            def lastLine = ''
+            while (!lastLine.contains('You can now view')) {
+                println(lastLine)
+                lastLine = reader.readLine()
+            }
+            println(lastLine)
+            println('Started front end app')
+        } catch (Exception ex) {
+            println(ex.getMessage())
+        }
+    }
+}
+
 task stopServer() {
     ext.getPid = { ->
         def proc = "lsof -n -i4TCP:8080".execute()
@@ -48,10 +66,37 @@ task stopServer() {
     }
 }
 
-task e2e {
-    dependsOn 'startServer'
-    doFirst {
-
+task stopClient() {
+    ext.getPid = { ->
+        def proc = "lsof -n -i4TCP:3000".execute()
+        def reader = proc.in.newReader()
+        while (true) {
+            def line = reader.readLine()
+            if (line == null) break
+            if (line.contains('LISTEN')) {
+                return line.split()[1]
+            }
+        }
     }
-    finalizedBy 'stopServer'
+
+    ext.killProc = { pid ->
+        exec {
+            commandLine 'kill', pid
+        }
+    }
+
+    doFirst {
+        def pid = getPid()
+        if (pid) killProc(pid)
+    }
+}
+
+task e2e {
+    dependsOn 'startServer', 'startClient'
+    doFirst {
+        exec {
+            commandLine 'npm', 'run', 'e2e'
+        }
+    }
+    finalizedBy 'stopServer', 'stopClient'
 }
