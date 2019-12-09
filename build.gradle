@@ -1,0 +1,18 @@
+plugins {
+    id 'base'
+}
+
+description = 'build'
+version = '0.0'
+
+task e2e {
+    ext.startServer = { ->
+        exec {
+            workingDir './server'
+            commandLine 'npm', 'start'
+        }
+    }
+    doFirst {
+        startServer();
+    }
+}
