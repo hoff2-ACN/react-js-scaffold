@@ -5,14 +5,53 @@ plugins {
 description = 'build'
 version = '0.0'
 
-task e2e {
-    ext.startServer = { ->
-        exec {
-            workingDir './server'
-            commandLine 'npm', 'start'
+task startServer() {
+    doFirst {
+        try {
+            def proc = 'node server/index.js &'.execute()
+            def reader = proc.in.newReader()
+            def lastLine = ''
+            while (!lastLine.contains('ready listening on 8080')) {
+                println(lastLine)
+                lastLine = reader.readLine()
+            }
+            println(lastLine)
+            println('Started Server')
+        } catch (Exception ex) {
+            println(ex.getMessage())
         }
     }
-    doFirst {
-        startServer();
+}
+
+task stopServer() {
+    ext.getPid = { ->
+        def proc = "lsof -n -i4TCP:8080".execute()
+        def reader = proc.in.newReader()
+        while (true) {
+            def line = reader.readLine()
+            if (line == null) break
+            if (line.contains('LISTEN')) {
+                return line.split()[1]
+            }
+        }
     }
+
+    ext.killProc = { pid ->
+        exec {
+            commandLine 'kill', pid
+        }
+    }
+
+    doFirst {
+        def pid = getPid()
+        if (pid) killProc(pid)
+    }
+}
+
+task e2e {
+    dependsOn 'startServer'
+    doFirst {
+
+    }
+    finalizedBy 'stopServer'
 }
