@@ -11,7 +11,7 @@ describe("ChatContainer", () => {
 
     let properties;
 
-    describe(("not connected to server"), () => {
+    describe("not connected to server", () => {
         beforeEach(() => {
             properties = {
                 connect: jest.fn(),

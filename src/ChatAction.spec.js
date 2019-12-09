@@ -2,9 +2,14 @@ import * as sinon from "sinon";
 import Chance from 'chance';
 import {connectToServer, SEND_MESSAGE, sendMessage} from "./ChatAction";
 const chance = new Chance();
-const dispatchSpy = sinon.stub();
 
 describe("Chat Action Creator", () => {
+    let dispatchSpy;
+
+    beforeEach(() => {
+        dispatchSpy = sinon.stub();
+    });
+
     test("should dispatch action when message sent", () => {
         const message = chance.string();
 
@@ -15,6 +20,7 @@ describe("Chat Action Creator", () => {
 
         sendMessage(message)(dispatchSpy);
 
+        expect(dispatchSpy.args[0][0].type).toEqual('REDUX_WEBSOCKET::SEND');
         expect(dispatchSpy.calledWithExactly(expectedAction)).toEqual(true);
     });
 

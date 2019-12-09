@@ -1,13 +1,13 @@
 import {SEND_MESSAGE} from "./ChatAction";
 import Chance from 'chance';
-import {sendMessageReducer} from './ChatReducer';
+import {sendMessageReducer, connectionReducer} from './ChatReducer';
 
 const chance = new Chance();
 
 describe('ChatReducer', () => {
-    const initialState = [];
-
     describe('send message', () => {
+        const initialState = [];
+
         it('adds the new message to the history', () => {
             const message = chance.string();
             const action = {
@@ -17,6 +17,22 @@ describe('ChatReducer', () => {
             const expectedResult = [message];
             const result = sendMessageReducer(initialState, action);
             expect(result).toEqual(expectedResult);
+        });
+
+        it('ignores other messages', () => {
+            const action = {
+                type: 'WHATEVER',
+            };
+            const result = sendMessageReducer(initialState, action);
+            expect(result).toEqual(initialState);
+        });
+    });
+
+    describe('connection reducer', () => {
+        it('updates the store if action is a websocket open', () => {
+            const action = {type: 'REDUX_WEBSOCKET::OPEN'};
+            const result = connectionReducer(false, action);
+            expect(result).toBe(true);
         });
     });
 });
