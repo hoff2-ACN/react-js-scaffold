@@ -2,6 +2,8 @@ import React, {useEffect, useState} from "react";
 import PropTypes from 'prop-types';
 
 const ChatContainer = (props) => {
+    props.connected || props.connect();
+
     const messageHistory = props.messageHistory;
     const [historyBox, setHistoryBox] = useState(null);
 
@@ -37,6 +39,7 @@ const ChatContainer = (props) => {
                     data-testid="historybox"
                     ref={(el) => setHistoryBox(el)}
                     value={formattedHistory()}
+                    onChange={() => {}}
                 />
             </div>
             <div className="message row">
@@ -62,6 +65,8 @@ const ChatContainer = (props) => {
 };
 
 ChatContainer.propTypes = {
+    connect: PropTypes.func,
+    connected: PropTypes.bool,
     messageHistory: PropTypes.arrayOf(PropTypes.string),
     send: PropTypes.func
 };
