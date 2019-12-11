@@ -32,7 +32,7 @@ app.post('/message', (req, res) => {
     res.sendStatus(200);
 });
 
-let server = app.listen(8080);
-console.log('ready listening on 8080');
+let server = app.listen(8081);
+console.log('ready listening on 8081');
 
 module.exports = {app, server};

@@ -3,7 +3,7 @@ import Chance from 'chance';
 const chance = new Chance();
 
 describe('the chat server', () => {
-    const url = "http://localhost:8080/message";
+    const url = "http://127.0.0.1:8081/message";
 
     it('gives a chat history', () => {
         const expectedMessage = chance.string();

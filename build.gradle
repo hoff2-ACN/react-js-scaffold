@@ -11,7 +11,7 @@ task startServer() {
             def proc = 'node server/index.js &'.execute()
             def reader = proc.in.newReader()
             def lastLine = ''
-            while (!lastLine.contains('ready listening on 8080')) {
+            while (!lastLine.contains('ready listening on 8081')) {
                 println(lastLine)
                 lastLine = reader.readLine()
             }
